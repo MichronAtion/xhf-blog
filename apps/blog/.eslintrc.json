@@ -1,0 +1,14 @@
+{
+  "extends": "next/core-web-vitals",
+  "ignorePatterns": [".next/**", "node_modules/**", "out/**"],
+  "overrides": [
+    {
+      "files": ["next.config.js", "postcss.config.cjs"],
+      "parser": "espree",
+      "parserOptions": {
+        "ecmaVersion": 2022,
+        "sourceType": "script"
+      }
+    }
+  ]
+}
