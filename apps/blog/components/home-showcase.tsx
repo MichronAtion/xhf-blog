@@ -1,13 +1,15 @@
 "use client";
 
 import type { CategoryGroup } from "@/lib/group-posts";
+import type { FeaturedPostSummary } from "@/components/featured-section";
 import { HomeHero } from "@/components/home-hero";
 import { FullBleedCanvas } from "@/components/full-bleed-canvas";
 import { CategoryShowcaseSection } from "@/components/category-showcase-section";
+import { FeaturedSection } from "@/components/featured-section";
 
-type Props = { groups: CategoryGroup[] };
+type Props = { groups: CategoryGroup[]; featured: FeaturedPostSummary[] };
 
-export function HomeShowcase({ groups }: Props) {
+export function HomeShowcase({ groups, featured }: Props) {
   return (
     <div id="top" className="flex flex-col">
       <HomeHero />
@@ -16,6 +18,7 @@ export function HomeShowcase({ groups }: Props) {
         id="modules"
         className="scroll-mt-20 space-y-24 bg-zinc-50 py-24 dark:bg-zinc-950"
       >
+        <FeaturedSection items={featured} />
         {groups.length === 0 ? (
           <div className="mx-auto max-w-6xl px-4 text-center text-sm text-zinc-500 sm:px-6 lg:px-8">
             还没有已发布的文章。请在 <code>content/posts</code> 添加 Markdown。

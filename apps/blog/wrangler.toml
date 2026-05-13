@@ -1,0 +1,5 @@
+# Cloudflare Pages：接入后在仪表盘中也可以不配此文件。
+# `wrangler pages deploy` 时用 pages_build_output_dir 指向 Next 静态导出目录。
+name = "xhf-blog"
+compatibility_date = "2024-11-01"
+pages_build_output_dir = "out"
