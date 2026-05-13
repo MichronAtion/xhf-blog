@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
-    "build:cf": "turbo run build --filter=blog",
+    "build:cf": "turbo run build:pages --filter=blog",
     "lint": "turbo lint",
     "start": "pnpm --filter blog start"
   },
