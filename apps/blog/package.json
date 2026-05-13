@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:pages": "cross-env STATIC_EXPORT=1 next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -29,6 +30,7 @@
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17",
     "@tailwindcss/typography": "^0.5.15",
+    "cross-env": "^7.0.3",
     "typescript": "^5.7.2"
   }
 }
