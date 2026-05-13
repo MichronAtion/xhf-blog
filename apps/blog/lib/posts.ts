@@ -7,6 +7,8 @@ export type PostMeta = {
   title: string;
   date: string;
   description?: string;
+  /** 设为 true 时在首页置顶展示推荐卡片 */
+  featured?: boolean;
   draft?: boolean;
   category?: string;
   /** 卡片左上角标签，例如 Service / Dev */
@@ -19,11 +21,47 @@ export type PostCover =
   | { kind: "gradient"; preset: CoverPresetId }
   | { kind: "image"; src: string };
 
+/** 列表 / 卡片用，不含正文，便于静态导出与减小 RSC 边界序列化体积 */
+export type PostCard = Omit<
+  PostMeta,
+  "draft" | "cover" | "featured"
+> & {
+  slug: string;
+  resolvedCover: PostCover;
+};
+
 export type Post = PostMeta & {
   slug: string;
   content: string;
   resolvedCover: PostCover;
 };
+
+export type PostListItem = Pick<
+  Post,
+  "slug" | "title" | "date" | "description" | "category"
+>;
+
+export function toPostCard(p: Post): PostCard {
+  return {
+    slug: p.slug,
+    title: p.title,
+    date: p.date,
+    description: p.description,
+    category: p.category,
+    tag: p.tag,
+    resolvedCover: p.resolvedCover,
+  };
+}
+
+export function toPostListItem(p: Post): PostListItem {
+  return {
+    slug: p.slug,
+    title: p.title,
+    date: p.date,
+    description: p.description,
+    category: p.category,
+  };
+}
 
 const contentDir = path.join(process.cwd(), "content/posts");
 
@@ -41,6 +79,7 @@ async function readPostFile(slug: string): Promise<Post | null> {
       date: meta.date,
       description: meta.description,
       draft: meta.draft,
+      featured: meta.featured,
       category: meta.category,
       tag: meta.tag,
       cover: meta.cover,

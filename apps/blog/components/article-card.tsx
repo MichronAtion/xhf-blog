@@ -3,11 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import type { Post } from "@/lib/posts";
+import type { PostCard } from "@/lib/posts";
 import { getGradientClass } from "@/lib/cover-presets";
 
 type Props = {
-  post: Post;
+  post: PostCard;
   index: number;
 };
 

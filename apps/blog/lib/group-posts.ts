@@ -1,4 +1,5 @@
-import type { Post } from "@/lib/posts";
+import type { Post, PostCard } from "@/lib/posts";
+import { toPostCard } from "@/lib/posts";
 import { sortCategoryKeys, showcaseForCategory } from "@/lib/category-showcase";
 
 export type CategoryGroup = {
@@ -7,7 +8,7 @@ export type CategoryGroup = {
   subtitle: string;
   ctaText: string;
   ctaHref: string;
-  posts: Post[];
+  posts: PostCard[];
 };
 
 export function groupPostsByCategory(posts: Post[]): CategoryGroup[] {
@@ -21,15 +22,16 @@ export function groupPostsByCategory(posts: Post[]): CategoryGroup[] {
   const keys = sortCategoryKeys([...map.keys()]);
   return keys.map((category) => {
     const copy = showcaseForCategory(category);
+    const sorted = (map.get(category) ?? []).sort((a, b) =>
+      a.date < b.date ? 1 : -1,
+    );
     return {
       category,
       title: copy.title,
       subtitle: copy.subtitle,
       ctaText: copy.ctaText,
       ctaHref: copy.ctaHref,
-      posts: (map.get(category) ?? []).sort((a, b) =>
-        a.date < b.date ? 1 : -1,
-      ),
+      posts: sorted.map(toPostCard),
     };
   });
 }
