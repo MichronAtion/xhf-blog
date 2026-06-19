@@ -1,0 +1,47 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: xhf-blog-postgres
+    environment:
+      POSTGRES_USER: blog
+      POSTGRES_PASSWORD: blog
+      POSTGRES_DB: blog_assistant
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U blog -d blog_assistant"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  assistant:
+    build:
+      context: .
+      dockerfile: apps/assistant/Dockerfile
+    container_name: xhf-blog-assistant
+    ports:
+      - "4001:4001"
+    environment:
+      PORT: 4001
+      DATABASE_URL: postgres://blog:blog@postgres:5432/blog_assistant
+      CORS_ORIGIN: http://localhost:3000,http://localhost:4000
+      BLOG_CONTENT_DIR: /app/blog-content/posts
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-ollama}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-http://host.docker.internal:11434/v1}
+      OPENAI_MODEL: ${OPENAI_MODEL:-qwen2.5:7b}
+      EMBEDDING_API_KEY: ${EMBEDDING_API_KEY:-ollama}
+      EMBEDDING_BASE_URL: ${EMBEDDING_BASE_URL:-http://host.docker.internal:11434/v1}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-nomic-embed-text}
+      EMBEDDING_DIMENSION: ${EMBEDDING_DIMENSION:-768}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./apps/blog/content/posts:/app/blog-content/posts:ro
+
+volumes:
+  pgdata:

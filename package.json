@@ -6,7 +6,12 @@
     "build": "turbo build",
     "build:cf": "turbo run build:pages --filter=blog",
     "lint": "turbo lint",
-    "start": "pnpm --filter blog start"
+    "start": "pnpm --filter blog start",
+    "dev:assistant": "pnpm --filter assistant dev",
+    "db:up": "docker compose up -d postgres",
+    "db:down": "docker compose down",
+    "assistant:ingest": "pnpm --filter assistant ingest",
+    "assistant:up": "docker compose up -d postgres assistant"
   },
   "devDependencies": {
     "turbo": "^2.3.3",

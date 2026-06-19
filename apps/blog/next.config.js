@@ -3,7 +3,7 @@ const isStaticExport = process.env.STATIC_EXPORT === "1";
 
 const nextConfig = {
   reactStrictMode: true,
-  transpilePackages: ["@repo/ui"],
+  transpilePackages: ["@repo/ui", "@repo/chat-ui", "@repo/form-sdk"],
   ...(isStaticExport ? { output: "export" } : {}),
   images: {
     unoptimized: isStaticExport,

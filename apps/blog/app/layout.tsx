@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { JetBrains_Mono, Noto_Sans_SC } from "next/font/google";
 import Link from "next/link";
 import { Container } from "@repo/ui";
+import { AssistantWidget } from "@/components/assistant-widget";
+// import { MonitorInit } from "@/components/monitor-init";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -36,6 +38,8 @@ export default function RootLayout({
       className={`${notoSansSC.variable} ${jetbrainsMono.variable}`}
     >
       <body className="font-sans">
+        {/* <MonitorInit /> */}
+        <AssistantWidget />
         <header className="sticky top-0 z-10 border-b border-zinc-200/80 bg-zinc-50/80 backdrop-blur dark:border-zinc-800/80 dark:bg-zinc-950/80">
           <Container className="flex h-14 items-center justify-between">
             <Link
@@ -50,6 +54,12 @@ export default function RootLayout({
               </Link>
               <Link href="/blog" className="hover:text-emerald-600 dark:hover:text-emerald-400">
                 文章
+              </Link>
+              <Link href="/chat" className="hover:text-emerald-600 dark:hover:text-emerald-400">
+                问 AI
+              </Link>
+              <Link href="/demos" className="hover:text-emerald-600 dark:hover:text-emerald-400">
+                演示
               </Link>
             </nav>
           </Container>
