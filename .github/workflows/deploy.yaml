@@ -38,7 +38,7 @@ jobs:
         run: pnpm lint
 
       - name: Build
-        run: pnpm build
+        run: pnpm build:cf
 
       # 3.ssh连接服务器，上传dist并覆盖站点目录
       - name: Deploy to Server
